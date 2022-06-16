@@ -14,8 +14,7 @@ spring:
       hibernate.generate_statistics: true
       hibernate.session.events.log: false
       hibernate.jdbc.timezone: UTC
-      hibernate.dialect: com.tep.config.PostgresqlBlobDialect
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: com.tep.config.PostgresqlBlobDialect
     mapping-resources: "DomainEventEntry.hbm.xml"
 
   datasource:

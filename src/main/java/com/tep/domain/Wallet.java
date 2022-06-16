@@ -4,7 +4,6 @@ import com.tep.command.CreateWalletCommand;
 import com.tep.command.DepositCommand;
 import com.tep.event.DepositedEvent;
 import com.tep.event.WalletCreatedEvent;
-import com.tep.exception.DepositLimitExceedException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
@@ -18,8 +17,6 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 public class Wallet {
-    public static final BigDecimal DEPOSIT_LIMIT = new BigDecimal("750.00");
-
     @AggregateIdentifier
     private String walletId;
     private BigDecimal balance;
@@ -39,8 +36,6 @@ public class Wallet {
     @CommandHandler
     public void handle(DepositCommand command) {
         final BigDecimal depositAmount = command.getDepositAmount();
-        checkDepositLimit(command.getDepositAmount());
-
         var event = new DepositedEvent(depositAmount);
         AggregateLifecycle.apply(event);
     }
@@ -48,11 +43,5 @@ public class Wallet {
     @EventSourcingHandler
     protected void on(DepositedEvent event) {
         this.balance = this.balance.add(event.getDepositAmount());
-    }
-
-    private void checkDepositLimit(BigDecimal depositAmount) {
-        if (this.balance.add(depositAmount).compareTo(BigDecimal.valueOf(750)) > 0) {
-            throw new DepositLimitExceedException();
-        }
     }
 }
