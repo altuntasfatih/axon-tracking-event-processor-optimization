@@ -6,6 +6,7 @@ build/
 !**/src/test/**
 .DS_Store
 *.hprof
+target
 
 ### STS ###
 .apt_generated
