@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class JsonbUserType implements UserType {
 
@@ -27,7 +29,13 @@ public class JsonbUserType implements UserType {
 
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
-        return x == y;
+        if (x == y) {
+            return true;
+        } else if (Objects.isNull(x) || Objects.isNull(y)) {
+            return false;
+        } else {
+            return Arrays.equals(((byte[]) x), (byte[]) y);
+        }
     }
 
     @Override

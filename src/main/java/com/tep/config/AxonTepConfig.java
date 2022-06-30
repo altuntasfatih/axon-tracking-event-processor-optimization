@@ -58,7 +58,6 @@ public class AxonTepConfig {
         String processingGroupName = appConfig.getEventProcessing().getProcessingGroupName();
 
         eventProcessingConfigurer.registerEventHandler(configuration -> demoEventHandler)
-                .registerListenerInvocationErrorHandler(processingGroupName, configuration -> new EventPublishLoggingErrorHandler())
                 .assignHandlerTypesMatching(processingGroupName, clazz -> clazz.isAssignableFrom(TestEventHandler.class))
                 .registerTrackingEventProcessor(processingGroupName, c -> {
                     EventBus eventBus = c.eventBus();

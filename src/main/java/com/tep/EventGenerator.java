@@ -33,7 +33,7 @@ public class EventGenerator implements CommandLineRunner {
     public void run(String... args) {
         if (eventGeneration.getEnabled()) {
 
-            log.info("Event generation is stared");
+            log.info("Event generation is started");
             var iterationCount = eventGeneration.getCount();
 
             IntStream.range(1, iterationCount)
